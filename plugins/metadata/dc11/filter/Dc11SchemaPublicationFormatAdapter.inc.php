@@ -77,8 +77,11 @@ class Dc11SchemaPublicationFormatAdapter extends MetadataDataObjectAdapter {
 		$dc11Description = $this->instantiateMetadataDescription();
 
 		// Title
-	        $publication = $monograph->getCurrentPublication();
-		$this->_addLocalizedElements($dc11Description, 'dc:title', $publication->getFullTitles());
+		$titles = [];
+		foreach ($monograph->getTitle(null) as $titleLocale => $title) {
+			$titles[$titleLocale] = $monograph->getFullTitle($titleLocale);
+		}
+		$this->_addLocalizedElements($dc11Description, 'dc:title', $titles);
 
 		// Creator
 		$authors = $monograph->getAuthors();
@@ -97,8 +100,8 @@ class Dc11SchemaPublicationFormatAdapter extends MetadataDataObjectAdapter {
 		$submissionSubjectDao = DAORegistry::getDAO('SubmissionSubjectDAO'); /* @var $submissionSubjectDao SubmissionSubjectDAO */
 		$supportedLocales = array_keys(AppLocale::getSupportedFormLocales());
 		$subjects = array_merge_recursive(
-			(array) $submissionKeywordDao->getKeywords($publication->getId(), $supportedLocales),
-			(array) $submissionSubjectDao->getSubjects($publication->getId(), $supportedLocales)
+			(array) $submissionKeywordDao->getKeywords($monograph->getId(), $supportedLocales),
+			(array) $submissionSubjectDao->getSubjects($monograph->getId(), $supportedLocales)
 		);
 		$this->_addLocalizedElements($dc11Description, 'dc:subject', $subjects);
 
@@ -187,14 +190,10 @@ class Dc11SchemaPublicationFormatAdapter extends MetadataDataObjectAdapter {
 			'submissionIds' => [$monograph->getId()],
 			'assocTypes' => [ASSOC_TYPE_PUBLICATION_FORMAT]
 		]);
-
-
 		foreach ($pubFormatFiles as $file) {
 			{
-				if ($file->getData('assocId') == $publicationFormat->getData('id')) {
-					$relation = $request->url($press->getData('urlPath'), 'catalog', 'view', [$monograph->getId(), $publicationFormat->getId(), $file->getId()]);
-					$dc11Description->addStatement('dc:relation', $relation);
-				}
+				$relation = $request->url($press->getData('urlPath'), 'catalog', 'view', [$monograph->getId(), $publicationFormat->getId(), $file->getId()]);
+				$dc11Description->addStatement('dc:relation', $relation);
 			}
 		}
 
