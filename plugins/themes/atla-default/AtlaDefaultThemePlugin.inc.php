@@ -20,17 +20,8 @@ class AtlaDefaultThemePlugin extends ThemePlugin {
 	 */
 	public function init() {
 		$this->setParent('defaultthemeplugin');
-
-//		// Override default styles for the "default" subtheme. Cookie Pro styling handled separately.
-//		$subtheme = $this->parent->getOption('bootstrapTheme');
-//		if ($subtheme == 'bootstrap3') {
-//			$this->addStyle('child-stylesheet', 'styles/atla.less');
-//			$this->modifyStyle('bootstrap', ['addLess' => ['styles/cookiepro.less']]);
-//		}
-//
-//		else {
-//			$this->modifyStyle("bootstrapTheme-{$subtheme}", ['addLess' => ['styles/cookiepro.less']]);
-//		}
+		$this->addStyle('stylesheet', 'styles/atla.less');
+		$this->appendStyles('stylesheet');
 	}
 
 	/**
