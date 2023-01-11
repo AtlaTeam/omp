@@ -20,8 +20,8 @@ class AtlaDefaultThemePlugin extends ThemePlugin {
 	 */
 	public function init() {
 		$this->setParent('defaultthemeplugin');
-		$this->addStyle('stylesheet', 'styles/atla.less');
-		$this->appendStyles('stylesheet');
+		$this->addStyle('child-stylesheet', 'styles/atla.less');
+		$this->appendStyles('child-stylesheet');
 	}
 
 	/**
