@@ -51,8 +51,8 @@
 				{translate key="about.submissionPreparationChecklist"}
 				{include file="frontend/components/editLink.tpl" page="management" op="settings" path="workflow" anchor="submission/submissionChecklist" sectionTitleKey="about.submissionPreparationChecklist"}
 			</h2>
-               <p class="lead">Please review the <a hfref="https://atla.libguides.com/atlaopenpress">Atla Open Press House Style Guidelines</a> prior to completing your submission.</p>
-               
+               <p class="lead">Please review the <a href="https://atla.libguides.com/atlaopenpress">Atla Open Press House Style Guidelines</a> prior to completing your submission.</p>
+
 			{translate key="about.submissionPreparationChecklist.description"}
 			<ul>
 				{foreach from=$submissionChecklist item=checklistItem}
